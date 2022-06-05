@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}L4P{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+        <div class="col-12 mt-3 ">
+            <div class="row">
+                <div class="col-12 text-lg-end text-center mb-3">
+                <a class="text-end h3 quitara" href="http://127.0.0.1:8000/logout"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
+                <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
+                </svg> Logout</a>
+                 </div>
+                <div class="col-12">
+                <h1 class="text-center">Bienvenido a L4P <strong id="user">{{user}}</strong>,</h1>
+                <h1 class="text-center">Escoge los juegos que te interesen</h1>
+                </div>   
+                
+            </div>
+        </div>
+        
+            <table class="col-12">
+                <tr>
+                    <td  class="p-5 h3"> <strong>Logo</strong></td>
+                    <td  class="p-5 h3"><strong>Nombre</strong></td>
+                    <td  class="p-5 h3"><strong>Categoría</strong></td>
+                    <td  class="pt-5" id="addj" style="display:none"><button onclick=addJuegos(this) class="quitara text-center">Empezar</button></td>
+                </tr>
+                {% for juego in juegos %}
+                <tr>
+                <td class="px-5"><img width='50px' height='50px'  src="{{juego.displayPhoto()}}"/></td>
+                    <td class="px-5 ">{{ juego.nombre }}</td>
+                    <td class="px-5">{{ juego.categoria }}</td>
+                    <td id="px-5 "> <button id="{{juego.id}}" onclick=clickaction(this) class="quitara text-center">Añadir</button> </td>
+                    
+                    
+                </tr>
+                   
+                {% endfor %}
+            </table>
+        
+                   
+        </div>
+    </div>
+</div>
+
+<script>
+    var ids=[];
+    function clickaction( b ){
+      var id=b.getAttribute("id");
+      
+      b.style.backgroundColor="#2f3337";
+      b.disabled=true;
+      b.innerHTML="Añadido";
+
+      var padre=b.parentNode.parentNode;
+      ids.push(id);
+       console.log(id);
+      var addj=document.getElementById("addj");
+      addj.style.display="block";
+
+     // window.location.href = "http://127.0.0.1:8000/user/altajugador/"+id+"/"+equipo;
+   }
+   function addJuegos( b ){
+      var user=document.getElementById("user");
+      window.location.href = "http://127.0.0.1:8000/forum/altajuegos/"+ids+"/"+user.innerHTML;
+   }
+</script>
+{% endblock %}
